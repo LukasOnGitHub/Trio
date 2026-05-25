@@ -87,7 +87,6 @@ platform :ios do
       app_identifier: [
         "#{BUNDLE_ID}",
         "#{BUNDLE_ID}.watchkitapp",
-        "#{BUNDLE_ID}.watchkitapp.TrioWatchComplication",
         "#{BUNDLE_ID}.LiveActivity"
 
       ]
