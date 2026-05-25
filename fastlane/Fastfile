@@ -112,13 +112,6 @@ platform :ios do
 
     update_code_signing_settings(
       path: "#{GITHUB_WORKSPACE}/Trio.xcodeproj",
-      profile_name: mapping["#{BUNDLE_ID}.watchkitapp.TrioWatchComplication"],
-      code_sign_identity: "iPhone Distribution",
-      targets: ["Trio Watch Complication Extension"]
-    )
-
-    update_code_signing_settings(
-      path: "#{GITHUB_WORKSPACE}/Trio.xcodeproj",
       profile_name: mapping["#{BUNDLE_ID}.LiveActivity"],
       code_sign_identity: "iPhone Distribution",
       targets: ["LiveActivityExtension"]
@@ -185,10 +178,6 @@ platform :ios do
       Spaceship::ConnectAPI::BundleIdCapability::Type::HEALTHKIT,
       Spaceship::ConnectAPI::BundleIdCapability::Type::NFC_TAG_READING,
       Spaceship::ConnectAPI::BundleIdCapability::Type::PUSH_NOTIFICATIONS
-    ])
-
-    configure_bundle_id("Trio Watch Complication", "#{BUNDLE_ID}.watchkitapp.TrioWatchComplication", [
-      Spaceship::ConnectAPI::BundleIdCapability::Type::APP_GROUPS
     ])
     
     configure_bundle_id("Trio Watch App", "#{BUNDLE_ID}.watchkitapp", [
