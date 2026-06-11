@@ -77,16 +77,15 @@ platform :ios do
     increment_build_number(
       xcodeproj: "#{GITHUB_WORKSPACE}/Trio.xcodeproj",
       build_number: current_build_number
-    )   
-
-    ENV["MATCH_READONLY"] = "false"
-
+    )      
+    
     match(
       type: "appstore",
       git_basic_authorization: Base64.strict_encode64("#{GITHUB_REPOSITORY_OWNER}:#{GH_PAT}"),
       app_identifier: [
         "#{BUNDLE_ID}",
         "#{BUNDLE_ID}.watchkitapp",
+        "#{BUNDLE_ID}.watchkitapp.TrioWatchComplication",
         "#{BUNDLE_ID}.LiveActivity"
 
       ]
@@ -108,6 +107,13 @@ platform :ios do
       profile_name: mapping["#{BUNDLE_ID}.watchkitapp"],
       code_sign_identity: "iPhone Distribution",
       targets: ["Trio Watch App"]
+    )
+
+    update_code_signing_settings(
+      path: "#{GITHUB_WORKSPACE}/Trio.xcodeproj",
+      profile_name: mapping["#{BUNDLE_ID}.watchkitapp.TrioWatchComplication"],
+      code_sign_identity: "iPhone Distribution",
+      targets: ["Trio Watch Complication Extension"]
     )
 
     update_code_signing_settings(
@@ -178,6 +184,10 @@ platform :ios do
       Spaceship::ConnectAPI::BundleIdCapability::Type::HEALTHKIT,
       Spaceship::ConnectAPI::BundleIdCapability::Type::NFC_TAG_READING,
       Spaceship::ConnectAPI::BundleIdCapability::Type::PUSH_NOTIFICATIONS
+    ])
+
+    configure_bundle_id("Trio Watch Complication", "#{BUNDLE_ID}.watchkitapp.TrioWatchComplication", [
+      Spaceship::ConnectAPI::BundleIdCapability::Type::APP_GROUPS
     ])
     
     configure_bundle_id("Trio Watch App", "#{BUNDLE_ID}.watchkitapp", [
